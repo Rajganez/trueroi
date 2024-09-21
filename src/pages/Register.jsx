@@ -55,6 +55,7 @@ const Register = () => {
       setError("Password and Conform Password does not match");
     } else {
       // loginFunc();
+      console.log(formData);
       setFormData(intiailData);
       setError("");
     }
@@ -110,9 +111,9 @@ const Register = () => {
         }}
       >
         <div className="md:flex grid grid-cols-2">
-          <div className="border-2 border-[#968ff3] w-0 h-[18rem] md:ml-20 ml-5"></div>
+          <div className="border-2 border-[#968ff3] w-0 h-[18rem] md:ml-20 ml-5 md:flex hidden"></div>
           <div
-            className="md:ml-1 mt-5 overflow-hidden"
+            className="ml-1 mt-5 overflow-hidden"
             style={{
               borderTopRightRadius: "40%",
             }}
@@ -186,7 +187,7 @@ const Register = () => {
                   </div>
                   <input
                     className="p-2 rounded-xl ml-2 mt-1 lg:w-[150%] md:w-[screen]"
-                    type="confirmPassword"
+                    type="password"
                     placeholder="Enter Your password again"
                     name="confirmPassword"
                     value={formData.confirmPassword}
