@@ -3,11 +3,14 @@ import { motion } from "framer-motion";
 import Mail from "../assets/mailing.jpg";
 import Sms from "../assets/sms.jpg";
 import Testimonial from "../assets/testimonials.jpg";
+import { useNavigate } from "react-router-dom";
 
 const images = [Mail, Sms, Testimonial];
 
 const Describe = () => {
   const [currentImage, setCurrentImage] = useState(0);
+
+  const navigate = useNavigate();
 
   // Function to cycle through the images
   useEffect(() => {
@@ -16,6 +19,11 @@ const Describe = () => {
     }, 3000); // Change image every 3 seconds
     return () => clearInterval(interval);
   }, []);
+
+  const handleRegister = (e) => {
+    e.preventDefault();
+    navigate("/register");
+  };
 
   return (
     <div
@@ -64,7 +72,6 @@ const Describe = () => {
               exit={{ opacity: 0 }}
               transition={{ duration: 0.8 }}
               className="flex justify-center items-center"
-              
             >
               <img
                 src={images[currentImage]}
@@ -76,9 +83,14 @@ const Describe = () => {
         </div>
       </div>
       <div className="mt-5 ml-10 md:ml-36 md:mt-3">
-        <button className="border rounded-full hover:bg-[#3B3686] hover:text-white border-black p-2 md:px-10">
+        <motion.button
+          whileHover={{ scale: 1.2 }}
+          whileTap={{ scale: 0.8 }}
+          className="border rounded-full hover:bg-[#3B3686] hover:text-white border-black p-2 md:px-10"
+          onClick={handleRegister}
+        >
           Get Started
-        </button>
+        </motion.button>
       </div>
     </div>
   );

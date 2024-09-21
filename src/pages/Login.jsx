@@ -4,12 +4,20 @@ import ListImg from "../assets/loademailid.png";
 import TestimonialLink from "../assets/gettestimoniallink.png";
 import HappyCustomer from "../assets/generateleads.png";
 import Footer from "../components/Footer";
+import { Link } from "react-router-dom";
 
 const images = [ListImg, TestimonialLink, HappyCustomer];
 
 const Login = () => {
   const [iconFont, setIconFont] = useState(false);
 
+  const intiailData = {
+    email: "",
+    password: "",
+  };
+
+  const [formData, setFormData] = useState(intiailData);
+  const [error, setError] = useState("");
   const [currentImage, setCurrentImage] = useState(0);
 
   // Function to cycle through the images
@@ -19,9 +27,45 @@ const Login = () => {
     }, 3000); // Change image every 3 seconds
     return () => clearInterval(interval);
   }, []);
+
   // Function to handle mouse enter and leave
   const handleMouseEnter = () => setIconFont(true);
   const handleMouseLeave = () => setIconFont(false);
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const loginMail = formData.email || "";
+    const validEmailDomains = [".com", ".in", ".org", ".dev"];
+    const emailDomainValid = validEmailDomains.some((domain) =>
+      loginMail.endsWith(domain)
+    );
+
+    if (!loginMail.includes("@") || !emailDomainValid) {
+      setError("Enter a valid email");
+      return;
+    }
+
+    const passwordPattern = /^(?=.*[a-zA-Z])(?=.*\d)[A-Za-z\d]{6,}$/;
+    if (!passwordPattern.test(formData.password)) {
+      setError("Password must be at least 6 characters long and include letters and numbers.");
+      return;
+    }
+
+    if (loginMail === "" || formData.password === "") {
+      setError("Email or Password must not be empty.");
+      return;
+    } else {
+      // loginFunc();
+      setFormData(intiailData);
+      setError("");
+    }
+  };
+
   return (
     <>
       <div className="flex justify-between border w-screen h-24 md:h-32 bg-[#DBD9F7] fixed z-50 top-0">
@@ -66,20 +110,95 @@ const Login = () => {
           </div>
         </div>
       </div>
+
+      {/* Mobile order change using flex and media queries */}
       <div
         className="bg-[#DBD9F7] md:h-[30rem] h-[100%] md:mt-32 mt-24 relative"
         style={{
           borderBottomLeftRadius: "80% 150px",
         }}
       >
-        <div className="md:flex">
+        <div className="md:flex flex-col-reverse md:flex-row">
+          <div className="lg:ml-60 md:mt-10 w-[30%]">
+            <div className="md:text-3xl text-xl mt-2 ml-10">Log In</div>
+            <form className="mt-10" onSubmit={handleSubmit}>
+              <div>
+                <input
+                  type="email"
+                  placeholder="john@gmail.com"
+                  className="p-2 rounded-xl ml-2 md:w-[80%] w-[screen]"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+
+              <div className="mt-5">
+                <input
+                  type="password"
+                  placeholder="Enter Your Password"
+                  className="p-2 rounded-xl ml-2 md:w-[80%] w-[screen]"
+                  name="password"
+                  value={formData.password}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+
+              <div className="mt-5 ml-2">
+                <motion.button
+                  type="submit"
+                  className="rounded-full p-2 bg-blue-900 text-white shadow-lg shadow-blue-900/50"
+                  style={{ width: "80%" }}
+                  whileHover={{ scale: 1.2 }}
+                  whileTap={{ scale: 0.8 }}
+                >
+                  Log In
+                </motion.button>
+              </div>
+              <div className="lg:text-lg text-xs mt-5 ml-2">
+                Not a User?{" "}
+                <Link to="/register">
+                  <motion.button
+                    whileHover={{ scale: 1.1 }}
+                    className="text-blue-800 hover:text-blue-500 hover:underline ml-2"
+                  >
+                    Create Your Account
+                  </motion.button>
+                </Link>
+              </div>
+              {error && (
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.7 }}
+                  className="text-red-500"
+                >
+                  {error}
+                </motion.div>
+              )}
+            </form>
+          </div>
+
+          <div className="lg:text-lg text-xs mt-5 lg:ml-10 ml-2 md:w-[20%]">
+            <div>
+              Smart Solutions for Customer Success: Update your customer email
+              and phone number to the List and send.
+            </div>
+            <div>
+              Accelerate Your Customer Journey: Generate your testimonial link
+              and share it with your customer.
+            </div>
+            <div>Boost Engagement, Drive Results</div>
+          </div>
+
           <motion.div
             key={currentImage}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.8 }}
-            // className="flex justify-center items-center"
           >
             <img
               src={images[currentImage]}
@@ -89,46 +208,6 @@ const Login = () => {
               className="object-contain mt-5 md:ml-10 ml-2 rounded-3xl"
             />
           </motion.div>
-          <div className="md:text-lg text-xs mt-5 md:ml-10 ml-2 md:w-[20%]">
-            <div>
-              Smart Solutions for Customer Success : Update your customer email
-              and phone number to the List and send
-            </div>
-            <div>
-              Accelerate Your Customer Journey : Generate your testimonial link
-              and share to your customer
-            </div>
-            <div>Boost Engagement, Drive Results</div>
-          </div>
-          <div className="md:ml-60 md:mt-10 w-[30%]">
-            <div className="text-3xl mt-5">Log In</div>
-            <form className="mt-10">
-              <div>
-                <input
-                  type="email"
-                  placeholder="Enter Your Email"
-                  className="p-2 rounded-xl md:w-[80%] w-screen"
-                />
-              </div>
-              <div className="mt-5">
-                <input
-                  type="password"
-                  placeholder="Enter Your Password"
-                  className="p-2 rounded-xl md:w-[80%] w-screen"
-                />
-              </div>
-              <div className="mt-5 ml-2">
-                <button
-                  type="button"
-                  className="rounded-lg border-2 p-2"
-                  style={{ width: "80%" }}
-                >
-                  Log In
-                </button>
-              </div>
-              <div className="text-lg mt-5">Not a User? Register</div>
-            </form>
-          </div>
         </div>
       </div>
       <Footer />
