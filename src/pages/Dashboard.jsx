@@ -12,6 +12,8 @@ import { CgProfile } from "react-icons/cg";
 import { RxHamburgerMenu } from "react-icons/rx";
 // import { LiaCrownSolid } from "react-icons/lia";
 import Calendar from "../components/Dashboard/Calendar";
+import UserDashboard from "../components/Dashboard/UserDashboard";
+import EmailCampaign from "../components/Dashboard/EmailCampaign";
 
 // Reusable Sidebar Item Component
 const SidebarItem = ({ icon: Icon, label, onClick }) => (
@@ -45,16 +47,16 @@ const Dashboard = () => {
   const renderContent = () => {
     switch (activeContent) {
       case "Dashboard":
-        return <div>Welcome to the Dashboard</div>;
+        return <UserDashboard />;
       case "Contacts":
         return <div>Here are your Contacts</div>;
       case "Calendar":
         return <Calendar />;
       case "Email Campaign":
-        return <div>Email Campaign settings</div>;
+        return <EmailCampaign />;
       case "Message Campaign":
         return <div>Message Campaign tools</div>;
-      case "Get Testimonial":
+      case "Testimonial Campaign":
         return <div>Collect testimonials here</div>;
       case "Todo":
         return <div>Your Todo list</div>;
@@ -145,8 +147,8 @@ const Dashboard = () => {
           />
           <SidebarItem
             icon={VscFeedback}
-            label="Get Testimonial"
-            onClick={() => setActiveContent("Get Testimonial")}
+            label="Testimonial Campaign"
+            onClick={() => setActiveContent("Testimonial Campaign")}
           />
           <SidebarItem
             icon={LuListTodo}
@@ -221,9 +223,9 @@ const Dashboard = () => {
             />
             <SidebarItem
               icon={VscFeedback}
-              label="Get Testimonial"
+              label="Testimonial Campaign"
               onClick={() => {
-                setActiveContent("Get Testimonial");
+                setActiveContent("Testimonial Campaign");
                 setIsSidebarOpen(false);
               }}
             />

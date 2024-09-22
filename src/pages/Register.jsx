@@ -2,16 +2,18 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import RegisterFace from "../assets/register1.jpg";
 import Footer from "../components/Footer";
+import { clientAPI } from "../api/axios-api.js";
+import { REGISTER_ROUTE } from "../api/constants.js";
 
 const Register = () => {
   const [iconFont, setIconFont] = useState(false);
-  const intiailData = {
+  const intialData = {
     username: "",
     email: "",
     password: "",
     confirmPassword: "",
   };
-  const [formData, setFormData] = useState(intiailData);
+  const [formData, setFormData] = useState(intialData);
   const [error, setError] = useState();
   // Function to handle mouse enter and leave
   const handleMouseEnter = () => setIconFont(true);
@@ -19,6 +21,15 @@ const Register = () => {
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const registerAPI = async () => {
+    try {
+      const response = await clientAPI.post(REGISTER_ROUTE, formData);
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleSubmit = (e) => {
@@ -54,9 +65,9 @@ const Register = () => {
     if (formData.password !== formData.confirmPassword) {
       setError("Password and Conform Password does not match");
     } else {
-      // loginFunc();
+      registerAPI();
       console.log(formData);
-      setFormData(intiailData);
+      // setFormData(intialData);
       setError("");
     }
   };
