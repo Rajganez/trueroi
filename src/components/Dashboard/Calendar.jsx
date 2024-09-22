@@ -69,7 +69,7 @@ const Calendar = () => {
 
   return (
     <>
-      <div className="md:w-96 w-screen bg-slate-100 md:m-2 md:p-2 m-1 p-1 shadow-lg">
+      <div className="lg:w-96 md:w-[28rem] w-screen bg-slate-100 md:m-2 md:p-2 m-1 p-1 shadow-lg">
         <div className="flex justify-between align-middle md:p-2 p-1">
           <button
             onClick={() =>

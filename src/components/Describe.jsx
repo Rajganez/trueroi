@@ -32,12 +32,12 @@ const Describe = () => {
         borderBottomRightRadius: "80% 150px",
       }}
     >
-      <div className="md:text-4xl text-gray-700 text-2xl md:ml-20 ml-7 pt-10">
+      <div className="lg:text-4xl text-gray-700 text-2xl md:ml-20 ml-7 pt-10">
         Your Marketing, Simplified
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:mt-5 mt-2 mx-5">
         {/* Text Column */}
-        <div className="grid grid-cols-1 gap-y-5 md:text-xl text-xs text-gray-800">
+        <div className="grid grid-cols-1 gap-y-5 lg:text-xl text-xs text-gray-800">
           <div className="border-x-violet-900 md:p-2 p-1 rounded">
             <strong>Email and Message Campaigns:</strong> Our platform allows
             you to send personalized, targeted emails and messages to your

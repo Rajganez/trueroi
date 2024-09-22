@@ -111,7 +111,7 @@ const Register = () => {
         }}
       >
         <div className="md:flex grid grid-cols-2">
-          <div className="border-2 border-[#968ff3] w-0 h-[18rem] md:ml-20 ml-5 md:flex hidden"></div>
+          <div className="border-2 border-[#968ff3] w-0 h-[18rem] lg:ml-20 ml-5 md:flex hidden"></div>
           <div
             className="ml-1 mt-5 overflow-hidden"
             style={{
@@ -127,7 +127,7 @@ const Register = () => {
             <br />
             <br /> Get Your True ROI For Free
           </div>
-          <div className="mt-5 mb-10 md:ml-36 ml-10 col-span-2">
+          <div className="mt-5 mb-10 lg:ml-36 ml-10 col-span-2">
             <div className="md:text-2xl text-lg">Register Here</div>
             <div className="mt-3">
               <form>

@@ -16,7 +16,8 @@ import Calendar from "../components/Dashboard/Calendar";
 // Reusable Sidebar Item Component
 const SidebarItem = ({ icon: Icon, label, onClick }) => (
   <div
-    className="mx-3 p-3 flex hover:bg-[#bde6a9] rounded-full cursor-pointer"
+    className="lg:mx-3 md:mx-2 md:p-1 lg:p-3 flex hover:bg-[#bde6a9] lg:rounded-full 
+    cursor-pointer md:rounded-2xl"
     type="button"
     onClick={onClick} // Added onClick handler
   >
@@ -66,7 +67,7 @@ const Dashboard = () => {
 
   const handleProfile = (e) => {
     e.preventDefault();
-    alert("Clicked")
+    alert("Clicked");
   };
 
   return (
@@ -116,7 +117,7 @@ const Dashboard = () => {
         <hr className="my-2" />
 
         {/* Sidebar Navigation */}
-        <div className="mt-5 text-xl hidden md:block">
+        <div className="mt-5 lg:text-xl hidden md:block">
           <SidebarItem
             icon={IoHomeOutline}
             label="Dashboard"
@@ -169,10 +170,10 @@ const Dashboard = () => {
           />
           <div>
             <CgProfile
-              className="md:text-6xl text-4xl ml-5 text-green-800"
+              className="lg:text-6xl text-4xl ml-5 text-green-800"
               type="button"
               onClick={handleProfile}
-              style={{cursor: "pointer"}}
+              style={{ cursor: "pointer" }}
             />
           </div>
         </div>
