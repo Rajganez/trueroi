@@ -4,7 +4,9 @@ import ListImg from "../assets/loademailid.png";
 import TestimonialLink from "../assets/gettestimoniallink.png";
 import HappyCustomer from "../assets/generateleads.png";
 import Footer from "../components/Footer";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { clientAPI } from "../api/axios-api.js";
+import { LOGIN_ROUTE } from "../api/constants.js";
 
 const images = [ListImg, TestimonialLink, HappyCustomer];
 
@@ -19,6 +21,9 @@ const Login = () => {
   const [formData, setFormData] = useState(intiailData);
   const [error, setError] = useState("");
   const [currentImage, setCurrentImage] = useState(0);
+  const [alertForLogin, setAlertForLogin] = useState(false);
+
+  const navigate = useNavigate();
 
   // Function to cycle through the images
   useEffect(() => {
@@ -36,9 +41,29 @@ const Login = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  const loginAPI = async () => {
+    try {
+      const response = await clientAPI.post(LOGIN_ROUTE, formData, {
+        withCredentials: true,
+      });
+      if (response.status === 200) {
+        // success handling
+        setAlertForLogin(true);
+        alert("Logged in successfully");
+        localStorage.setItem("auth_token", response.data.userId);
+        navigate("/dashboard");
+      } else {
+        alert("Error Logging in please try again");
+      }
+      // success handling
+    } catch (error) {
+      console.log(error);
+      // error handling
+    }
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-
     const loginMail = formData.email || "";
     const validEmailDomains = [".com", ".in", ".org", ".dev"];
     const emailDomainValid = validEmailDomains.some((domain) =>
@@ -52,15 +77,16 @@ const Login = () => {
 
     const passwordPattern = /^(?=.*[a-zA-Z])(?=.*\d)[A-Za-z\d]{6,}$/;
     if (!passwordPattern.test(formData.password)) {
-      setError("Password must be at least 6 characters long and include letters and numbers.");
+      setError(
+        "Password must be at least 6 characters long and include letters and numbers."
+      );
       return;
     }
-
     if (loginMail === "" || formData.password === "") {
       setError("Email or Password must not be empty.");
       return;
     } else {
-      // loginFunc();
+      loginAPI();
       setFormData(intiailData);
       setError("");
     }
@@ -157,7 +183,7 @@ const Login = () => {
                   Log In
                 </motion.button>
               </div>
-              <div className="lg:text-lg text-xs mt-5 ml-2">
+              <div className="lg:text-lg flex text-xs mt-5 ml-2">
                 Not a User?{" "}
                 <Link to="/register">
                   <motion.button
@@ -168,6 +194,7 @@ const Login = () => {
                   </motion.button>
                 </Link>
               </div>
+              {alertForLogin && <div></div>}
               {error && (
                 <motion.div
                   initial={{ opacity: 0 }}

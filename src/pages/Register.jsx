@@ -4,6 +4,7 @@ import RegisterFace from "../assets/register1.jpg";
 import Footer from "../components/Footer";
 import { clientAPI } from "../api/axios-api.js";
 import { REGISTER_ROUTE } from "../api/constants.js";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
   const [iconFont, setIconFont] = useState(false);
@@ -18,6 +19,7 @@ const Register = () => {
   // Function to handle mouse enter and leave
   const handleMouseEnter = () => setIconFont(true);
   const handleMouseLeave = () => setIconFont(false);
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -34,7 +36,6 @@ const Register = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
     const loginMail = formData.email || "";
     const validEmailDomains = [".com", ".in", ".org", ".dev"];
     const emailDomainValid = validEmailDomains.some((domain) =>
@@ -53,7 +54,6 @@ const Register = () => {
       );
       return;
     }
-
     if (
       loginMail === "" ||
       formData.password === "" ||
@@ -71,6 +71,11 @@ const Register = () => {
       setError("");
     }
   };
+
+  const handleLoginNavigation = () => {
+    navigate("/login");
+  };
+
   return (
     <>
       <div className="flex justify-between border w-screen h-24 md:h-32 bg-[#DBD9F7] fixed z-50 top-0">
@@ -144,11 +149,12 @@ const Register = () => {
               <form>
                 <div className="mt-3">
                   <div>
-                    <label>
+                    <label htmlFor="name">
                       Name<span className="text-red-600">*</span>
                     </label>
                   </div>
                   <input
+                    id="name"
                     className="p-2 rounded-xl ml-2 mt-1 lg:w-[150%] md:w-[screen] "
                     type="text"
                     placeholder="Enter Your Name"
@@ -160,11 +166,12 @@ const Register = () => {
                 </div>
                 <div className="mt-3">
                   <div>
-                    <label>
+                    <label htmlFor="email">
                       Email<span className="text-red-600">*</span>
                     </label>
                   </div>
                   <input
+                    id="email"
                     className="p-2 rounded-xl ml-2 mt-1 lg:w-[150%] md:w-[screen]"
                     type="email"
                     placeholder="john@yourmail.com"
@@ -176,11 +183,12 @@ const Register = () => {
                 </div>
                 <div className="mt-3">
                   <div>
-                    <label>
+                    <label htmlFor="password">
                       Password<span className="text-red-600">*</span>
                     </label>
                   </div>
                   <input
+                    id="password"
                     className="p-2 rounded-xl ml-2 mt-1 lg:w-[150%] md:w-[screen]"
                     type="password"
                     placeholder="Enter Your password"
@@ -192,11 +200,12 @@ const Register = () => {
                 </div>
                 <div className="mt-3">
                   <div>
-                    <label>
+                    <label htmlFor="conformPassword">
                       Confirm Password<span className="text-red-600">*</span>
                     </label>
                   </div>
                   <input
+                    id="conformPassword"
                     className="p-2 rounded-xl ml-2 mt-1 lg:w-[150%] md:w-[screen]"
                     type="password"
                     placeholder="Enter Your password again"
@@ -206,17 +215,30 @@ const Register = () => {
                     required
                   />
                 </div>
-                <div className="mt-5 ml-10">
-                  <motion.button
-                    type="submit"
-                    className="rounded-full p-2 bg-blue-900 text-white shadow-lg shadow-blue-900/50"
-                    style={{ width: "80%" }}
-                    whileHover={{ scale: 1.2 }}
-                    whileTap={{ scale: 0.8 }}
-                    onClick={handleSubmit}
-                  >
-                    Register
-                  </motion.button>
+                <div className="flex">
+                  <div className="mt-5 ml-10">
+                    <motion.button
+                      type="submit"
+                      className="rounded-full p-2 bg-blue-900 text-white shadow-lg shadow-blue-900/50"
+                      style={{ width: "100%" }}
+                      whileHover={{ scale: 1.2 }}
+                      whileTap={{ scale: 0.8 }}
+                      onClick={handleSubmit}
+                    >
+                      Register
+                    </motion.button>
+                  </div>
+                  <div className="mt-7 ml-5">
+                    <motion.div
+                      type="button"
+                      style={{ cursor: "pointer" }}
+                      className="text-blue-800 hover:text-blue-500 hover:underline"
+                      whileHover={{ scale: 1.2 }}
+                      onClick={handleLoginNavigation}
+                    >
+                      Login
+                    </motion.div>
+                  </div>
                 </div>
                 {error && (
                   <motion.div

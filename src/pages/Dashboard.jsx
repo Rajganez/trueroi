@@ -14,6 +14,11 @@ import { RxHamburgerMenu } from "react-icons/rx";
 import Calendar from "../components/Dashboard/Calendar";
 import UserDashboard from "../components/Dashboard/UserDashboard";
 import EmailCampaign from "../components/Dashboard/EmailCampaign";
+import { LOGOUT_ROUTE } from "../api/constants";
+import { clientAPI } from "../api/axios-api";
+import { useBlocker, useNavigate } from "react-router-dom";
+import CustomModal from "../components/CustomModal";
+import Contacts from "../components/Dashboard/Contacts";
 
 // Reusable Sidebar Item Component
 const SidebarItem = ({ icon: Icon, label, onClick }) => (
@@ -38,7 +43,9 @@ const Dashboard = () => {
   const [iconFont, setIconFont] = useState(false);
   const [activeContent, setActiveContent] = useState("Dashboard");
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [showLogoutOptions, setShowLogoutOptions] = useState(false);
 
+  const navigate = useNavigate();
   // Function to handle mouse enter and leave
   const handleMouseEnter = () => setIconFont(true);
   const handleMouseLeave = () => setIconFont(false);
@@ -49,7 +56,7 @@ const Dashboard = () => {
       case "Dashboard":
         return <UserDashboard />;
       case "Contacts":
-        return <div>Here are your Contacts</div>;
+        return <Contacts />;
       case "Calendar":
         return <Calendar />;
       case "Email Campaign":
@@ -67,13 +74,48 @@ const Dashboard = () => {
     }
   };
 
-  const handleProfile = (e) => {
+  const isAuthenticated = () => {
+    return localStorage.getItem("auth_token");
+  };
+
+  //To prevent the user to return to the login without closing the session
+  let blocker = useBlocker(
+    ({ nextLocation }) =>
+      isAuthenticated() &&
+      (nextLocation.pathname === "/login" ||
+        nextLocation.pathname === "/home" ||
+        nextLocation.pathname === "/")
+  );
+  const handleStay = () => {
+    blocker.reset();
+  };
+  
+  const logoutAPI = async () => {
+    try {
+      const response = await clientAPI.post(LOGOUT_ROUTE);
+      if (response.status === 200) {
+        localStorage.removeItem("auth_token");
+        navigate("/home");
+      }
+      blocker.proceed();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const handleLogout = (e) => {
     e.preventDefault();
-    alert("Clicked");
+    logoutAPI();
   };
 
   return (
     <div className="md:flex h-screen">
+      {blocker.state === "blocked" ? (
+        <CustomModal
+          message={"Do You want to Leave this Page"}
+          onConfirm={handleLogout}
+          onCancel={handleStay}
+        />
+      ) : null}
       {/* Sidebar */}
       <div className="md:w-[20%] bg-[#F9FFF6]">
         <div
@@ -174,9 +216,19 @@ const Dashboard = () => {
             <CgProfile
               className="lg:text-6xl text-4xl ml-5 text-green-800"
               type="button"
-              onClick={handleProfile}
+              onClick={() => setShowLogoutOptions(!showLogoutOptions)}
               style={{ cursor: "pointer" }}
             />
+            {showLogoutOptions && (
+              <div className="absolute right-0 mt-2 w-40 bg-white border border-gray-200 rounded-lg shadow-lg">
+                <button
+                  className="block w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-100"
+                  onClick={handleLogout}
+                >
+                  Logout
+                </button>
+              </div>
+            )}
           </div>
         </div>
         {isSidebarOpen && (
