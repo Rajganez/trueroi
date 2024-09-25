@@ -8,9 +8,9 @@ const Footer = () => {
       }}
     >
       <div className="flex justify-center">
-        <div className="md:text-lg md:px-6 text-xs px-3">Privacy </div>
-        <div className="md:text-lg md:px-6 text-xs px-3">Support </div>
-        <div className="md:text-lg md:px-6 text-xs px-3">Refer and Earn</div>
+        <button className="md:text-lg md:px-6 text-xs px-3">Privacy </button>
+        <button className="md:text-lg md:px-6 text-xs px-3">Support </button>
+        <button className="md:text-lg md:px-6 text-xs px-3">Refer and Earn</button>
       </div>
       <div className="flex justify-center mt-2">
         <hr style={{ width: "20%" }} className="border" />

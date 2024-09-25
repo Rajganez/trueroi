@@ -5,6 +5,7 @@ import { clientAPI } from "../../../api/axios-api.js";
 import { ADDLIST_ROUTE, FILE_UPLOAD_ROUTE } from "../../../api/constants.js";
 import { CgSpinner } from "react-icons/cg";
 import { motion } from "framer-motion";
+// import { ImSpinner3 } from "react-icons/im";
 
 const CreateList = () => {
   const intialState = {
@@ -20,30 +21,38 @@ const CreateList = () => {
   const [phoneError, setPhoneListError] = useState("");
   const [showSpinner, setShowSpinner] = useState(false);
   const [SuccessMsg, setSuccessMsg] = useState(false);
+  const [showDragOverEffect, setShowDragOverEffect] = useState(false);
+  const [showUploadProgress, setShowUploadProgress] = useState("");
 
   const fileRef = useRef();
 
   const processFile = async (file) => {
-    const id = localStorage.getItem("auth_token")
+    const id = localStorage.getItem("auth_token");
     if (file) {
       const formData = new FormData();
       const originalFileName = file.name;
       const modifiedFileName = originalFileName.replace(/\s+/g, "_");
       formData.append("file", file, modifiedFileName);
       formData.append("userId", id);
+      setShowUploadProgress("Uploading...");
       try {
-        // const formData = new FormData(); // Create a FormData object
-        // formData.append("file", bulkUpload);
-        //   const temp = { userId: Id, file: bulkUpload };
         const response = await clientAPI.post(FILE_UPLOAD_ROUTE, formData, {
           withCredentials: true,
           headers: { "Content-Type": "multipart/form-data" },
         });
+        if (response.status === 200) {
+          setShowUploadProgress("Uploaded");
+        }
         console.log(response);
       } catch (error) {
-        console.log(error);
+        if (error.status === 409) {
+          setShowUploadProgress("Lists Already in Contact.");
+        } else if (error.status === 400 || error.status === 401) {
+          alert(error.message);
+        } else {
+          alert("Something went wrong. Please try again later");
+        }
       }
-      //   setBulkUpload(formData); // Set the file data in the bulk upload state
     }
   };
 
@@ -52,6 +61,9 @@ const CreateList = () => {
       const file = fileRef.current.files[0];
       processFile(file);
     } catch (error) {
+      if(error){
+        alert(error.message);
+      }
       console.log(error);
     }
   };
@@ -60,17 +72,21 @@ const CreateList = () => {
     if (fileRef.current) {
       fileRef.current.click();
     }
+    setShowUploadProgress("");
   };
 
   const handleDragOver = (e) => {
     e.preventDefault();
+    e.stopPropagation();
+    setShowDragOverEffect(true);
+    setShowUploadProgress("");
   };
 
   const handleDrop = (e) => {
     e.preventDefault();
     const file = e.dataTransfer.files[0];
     processFile(file);
-    // bulkFileUploadAPI();
+    setShowDragOverEffect(false);
   };
 
   const handleFormChange = (e) => {
@@ -107,21 +123,6 @@ const CreateList = () => {
     }
   };
 
-  //   const bulkFileUploadAPI = async () => {
-  //     // const Id = localStorage.getItem("auth_token");
-  //     try {
-  //         // const formData = new FormData(); // Create a FormData object
-  //         // formData.append("file", bulkUpload);
-  //       //   const temp = { userId: Id, file: bulkUpload };
-  //       const response = await clientAPI.post(FILE_UPLOAD_ROUTE, formData, {
-  //         withCredentials: true,
-  //       });
-  //       console.log(response);
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   };
-
   const handleListAddition = (e) => {
     e.preventDefault();
     const { name, email, phone } = formData;
@@ -148,10 +149,10 @@ const CreateList = () => {
     if (!loginMail.includes("@") || !emailDomainValid) {
       setError("Enter a valid email");
       return;
-    } else if (email === "" || phone === "") {
-      setError("Email or Phone number are required");
+    } else if (email === "" && phone === "") {
+      setError("Email and Phone number are required");
       return;
-    } else if (phone.length < 1 || phone.length > 10) {
+    } else if (phone.length < 1 && phone.length > 10) {
       setError("Phone number must be between 1 and 10 digits");
       return;
     } else if (!validateName(name)) {
@@ -264,16 +265,25 @@ const CreateList = () => {
         <div className="mt-5 text-xl">Bulk Upload &nbsp;</div>
         <div className="lg:flex">
           <div
-            className="border-dotted border border-gray-300 shadow-sm lg:ml-20 mt-5 
-            h-[12rem] lg:w-[60%]"
+            className={`border-dotted border border-gray-300 shadow-sm lg:ml-20 mt-5 h-[12rem] lg:w-[60%] ${
+              showDragOverEffect ? "bg-gray-500" : ""
+            }`}
             onDragOver={handleDragOver}
             onDrop={handleDrop}
+            onDragLeave={() => setShowDragOverEffect(false)}
           >
             <div className="ml-32 justify-center lg:mt-16 mt-16">
               <button onClick={handleUpload}>
                 <FiUploadCloud className="text-4xl ml-5 text-slate-400" />
                 <span className="ml-3">Upload</span>
               </button>
+              {showUploadProgress !== "Lists Already in Contact." ? (
+                <div className="text-xs text-green-600 animate-pulse">
+                  {showUploadProgress}
+                </div>
+              ) : (
+                <div className="text-xs text-red-600">{showUploadProgress}</div>
+              )}
               <input
                 type="file"
                 hidden
@@ -283,6 +293,7 @@ const CreateList = () => {
               <div className="text-xs">(.xlsx,.txt,.csv)</div>
             </div>
           </div>
+
           <div className="lg:ml-16 lg:mt-10 ml-5 mt-5 lg:text-lg text-xs">
             Check the Sample Format{" "}
             <motion.button
@@ -302,7 +313,13 @@ const CreateList = () => {
                 className="p-1 text-lg text-red-800"
                 onClick={() => setSampleFormat(false)}
               >
-                [x] Close
+                <motion.button
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.9 }}
+                  className="lg:ml-52 border-red-700 lg:p-1 lg:rounded-lg"
+                >
+                  [x] Close
+                </motion.button>
               </button>
               <img src={ExcelPic} width={300} title="Sample Format" />
             </div>

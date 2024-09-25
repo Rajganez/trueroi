@@ -11,5 +11,7 @@ export const CONTACT_ROUTE = "/list";
 export const ADDLIST_ROUTE = `${CONTACT_ROUTE}/add`;
 export const SHOWLIST_ROUTE = `${CONTACT_ROUTE}/show`;
 export const FILE_UPLOAD_ROUTE = `${CONTACT_ROUTE}/file-upload`;
+export const EDIT_CLIENT_ROUTE = `${CONTACT_ROUTE}/edit`;
+export const CONFIRM_DELETE_ROUTE = `${CONTACT_ROUTE}/delete`;
 
 
