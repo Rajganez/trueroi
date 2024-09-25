@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import Mail from "../assets/mailing.jpg";
-import Sms from "../assets/sms.jpg";
-import Testimonial from "../assets/testimonials.jpg";
+import Mail from "../../assets/mailing.jpg";
+import Sms from "../../assets/sms.jpg";
+import Testimonial from "../../assets/testimonials.jpg";
 import { useNavigate } from "react-router-dom";
 
 const images = [Mail, Sms, Testimonial];

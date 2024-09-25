@@ -17,7 +17,7 @@ import EmailCampaign from "../components/Dashboard/EmailCampaign";
 import { LOGOUT_ROUTE } from "../api/constants";
 import { clientAPI } from "../api/axios-api";
 import { useBlocker, useNavigate } from "react-router-dom";
-import CustomModal from "../components/CustomModal";
+import CustomModal from "../components/User/CustomModal";
 import Contacts from "../components/Dashboard/Contacts";
 
 // Reusable Sidebar Item Component

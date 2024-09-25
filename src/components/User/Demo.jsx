@@ -1,4 +1,4 @@
-import Video from "../assets/demo.mp4";
+import Video from "../../assets/demo.mp4";
 
 const Demo = () => {
   const handleSubmit = (e) => {

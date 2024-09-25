@@ -9,3 +9,7 @@ export const LOGOUT_ROUTE = `${AUTH_ROUTE}/logout`;
 
 export const CONTACT_ROUTE = "/list";
 export const ADDLIST_ROUTE = `${CONTACT_ROUTE}/add`;
+export const SHOWLIST_ROUTE = `${CONTACT_ROUTE}/show`;
+export const FILE_UPLOAD_ROUTE = `${CONTACT_ROUTE}/file-upload`;
+
+

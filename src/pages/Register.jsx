@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import RegisterFace from "../assets/register1.jpg";
-import Footer from "../components/Footer";
+import Footer from "../components/User/Footer.jsx";
 import { clientAPI } from "../api/axios-api.js";
 import { REGISTER_ROUTE } from "../api/constants.js";
 import { useNavigate } from "react-router-dom";

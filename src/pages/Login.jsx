@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import ListImg from "../assets/loademailid.png";
 import TestimonialLink from "../assets/gettestimoniallink.png";
 import HappyCustomer from "../assets/generateleads.png";
-import Footer from "../components/Footer";
+import Footer from "../components/User/Footer.jsx";
 import { Link, useNavigate } from "react-router-dom";
 import { clientAPI } from "../api/axios-api.js";
 import { LOGIN_ROUTE } from "../api/constants.js";
