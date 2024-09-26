@@ -66,9 +66,12 @@ const MasterList = () => {
       }
     } catch (error) {
       if (error.status === 404) {
-        alert(error.message);
+        alert(error.response.msg);
       } else if (error.status === 403) {
-        setError(`${error.message}`);
+        setError(`${error.response.data.msg}`);
+        setTimeout(() => {
+          setError("");
+        }, 1000);
       }
     }
   };
@@ -147,7 +150,7 @@ const MasterList = () => {
 
   useEffect(() => {
     masterListAPI();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [showEditSuccess]);
 
   return (

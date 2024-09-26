@@ -94,7 +94,7 @@ const Dashboard = () => {
     try {
       const response = await clientAPI.post(LOGOUT_ROUTE);
       if (response.status === 200) {
-        localStorage.removeItem("auth_token");
+        localStorage.clear();
         navigate("/home");
       }
       blocker.proceed();
