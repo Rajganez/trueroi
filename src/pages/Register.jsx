@@ -28,9 +28,14 @@ const Register = () => {
   const registerAPI = async () => {
     try {
       const response = await clientAPI.post(REGISTER_ROUTE, formData);
-      console.log(response);
+      if(response.status === 200){
+        navigate("/login");
+        alert("Registered successfully. Login")
+        setFormData(intialData);
+      }
     } catch (error) {
       console.log(error);
+      alert("An error occurred while registering");
     }
   };
 

@@ -1,12 +1,11 @@
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 
-const ActivityName = () => {
+const SmsActivity = () => {
   const [activityName, setActivityName] = useState("");
   const [showSuccess, setShowSuccess] = useState(false);
   const [error, setError] = useState("");
 
-  // Set in local Storage using the function
   const handleSave = () => {
     if (activityName.length < 5 || activityName.length > 30) {
       setError("Activity name must be between 5 and 30 characters.");
@@ -14,12 +13,12 @@ const ActivityName = () => {
       return; // Exit the function without saving
     }
     setError(""); // Clear any previous errors
-    localStorage.setItem("activityName", activityName);
+    localStorage.setItem("smsActivityName", activityName);
     setShowSuccess(true);
   };
 
   useEffect(() => {
-    const activity = localStorage.getItem("activityName");
+    const activity = localStorage.getItem("smsActivityName");
     if (activity) {
       setActivityName(activity);
     }
@@ -48,7 +47,7 @@ const ActivityName = () => {
           <motion.button
             whileHover={{ scale: 1.1 }}
             className="px-4 md:px-10 md:p-2 p-1 border rounded-3xl bg-green-600 
-            hover:bg-green-700"
+                hover:bg-green-700"
             onClick={handleSave}
           >
             Save
@@ -64,4 +63,4 @@ const ActivityName = () => {
   );
 };
 
-export default ActivityName;
+export default SmsActivity;

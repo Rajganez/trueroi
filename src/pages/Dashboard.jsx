@@ -19,6 +19,7 @@ import { clientAPI } from "../api/axios-api";
 import { useBlocker, useNavigate } from "react-router-dom";
 import CustomModal from "../components/User/CustomModal";
 import Contacts from "../components/Dashboard/Contacts";
+import MessageCampaign from "../components/Dashboard/MessageCampaign/MessageCampaign";
 
 // Reusable Sidebar Item Component
 const SidebarItem = ({ icon: Icon, label, onClick }) => (
@@ -62,7 +63,7 @@ const Dashboard = () => {
       case "Email Campaign":
         return <EmailCampaign />;
       case "Message Campaign":
-        return <div>Message Campaign tools</div>;
+        return <MessageCampaign />;
       case "Testimonial Campaign":
         return <div>Collect testimonials here</div>;
       case "Todo":

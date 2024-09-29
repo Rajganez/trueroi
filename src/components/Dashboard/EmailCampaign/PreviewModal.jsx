@@ -1,8 +1,8 @@
 import PropTypes from "prop-types";
 import { motion } from "framer-motion";
 
-const PreviewModal = ({ isVisible, onClose, activityData }) => {
-  if (!isVisible) return null; // Don't render the modal if it's not visible
+const PreviewModal = ({ showModal, onClose, activityData }) => {
+  if (!showModal) return null; // Don't render the modal if it's not visible
 
   // Destructure the activityData object
   const {
@@ -115,9 +115,9 @@ const PreviewModal = ({ isVisible, onClose, activityData }) => {
 };
 
 PreviewModal.propTypes = {
-  isVisible: PropTypes.bool.isRequired,
-  onClose: PropTypes.func.isRequired,
-  activityData: PropTypes.object.isRequired, // Data object for preview content
+  showModal: PropTypes.bool,
+  onClose: PropTypes.func,
+  activityData: PropTypes.object, // Data object for preview content
 };
 
 export default PreviewModal;

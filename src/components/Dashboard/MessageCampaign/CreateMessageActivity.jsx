@@ -1,33 +1,21 @@
-import { BsSend } from "react-icons/bs";
-import { AiFillCaretRight } from "react-icons/ai";
 import PropTypes from "prop-types";
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import ActivityName from "./ActivityName";
-import Recipient from "./Recipient";
-import Subject from "./Subject";
-import MessageBody from "./MessageBody";
-import Signature from "./Signature";
+import { AiFillCaretRight } from "react-icons/ai";
+import FullScreenLoader from "../EmailCampaign/FullScreenLoader";
 import { TiEyeOutline } from "react-icons/ti";
-import PreviewModal from "./PreviewModal";
-import { clientAPI } from "../../../api/axios-api.js";
-import { SEND_EMAIL_ROUTE } from "../../../api/constants.js";
-import FullScreenLoader from "./FullScreenLoader"; // Import the loader component
+import { BsSend } from "react-icons/bs";
+import PreviewModal from "../EmailCampaign/PreviewModal";
+import SmsActivity from "./SmsActivity";
+import TosmsRecipient from "./TosmsRecipient";
 
-// Define an array for the sidebar labels for easy indexing
-const sidebarLabels = [
-  "Activity Name",
-  "Recipient",
-  "Subject",
-  "Message",
-  "Signature",
-];
+const sidebarLabels = ["Activity Name", "To", "Message"];
 
 const SidebarItem = ({ label, onClick, isActive, renderContent }) => (
   <div>
     <motion.div
       className={`lg:mx-3 md:ml-0 ml-10 md:mx-2 md:p-1 lg:p-3 flex cursor-pointer items-center 
-        md:rounded-2xl ${isActive ? "scale-110 opacity-100" : "opacity-60"}`}
+          md:rounded-2xl ${isActive ? "scale-110 opacity-100" : "opacity-60"}`}
       onClick={onClick}
       whileHover={{ scale: 1.1 }} // Hover effect for slight scaling
       animate={{ scale: isActive ? 1.2 : 1, opacity: isActive ? 1 : 0.6 }}
@@ -52,8 +40,7 @@ SidebarItem.propTypes = {
   isActive: PropTypes.bool, // Added prop to indicate active item
   renderContent: PropTypes.func, // Function to render the content below the item
 };
-
-const CreateActivity = () => {
+const MessageCampaign = () => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [showModal, setShowModal] = useState(false);
   const [showPreviewButton, setShowPreviewButton] = useState(false);
@@ -62,30 +49,20 @@ const CreateActivity = () => {
   const [successMail, setSuccessMail] = useState(false);
 
   // Calculate the width based on the active index
-  const calculateWidth = () => `${(activeIndex + 1) * 20}%`;
+  const calculateWidth = () => `${(activeIndex + 1) * 33.3}%`;
 
   // Check local storage values and set the visibility of the Preview button
   const checkLocalStorage = () => {
-    const activityName = localStorage.getItem("activityName");
-    const subjectName = localStorage.getItem("subjectName");
-    const signatureData = localStorage.getItem("signatureData");
-    const messageData = localStorage.getItem("messageData");
-    const recipientMail = localStorage.getItem("recipientMail");
+    const smsActivityName = localStorage.getItem("smsActivityName");
+    const smsMessageData = localStorage.getItem("smsMessageData");
+    const toPhone = localStorage.getItem("toPhone");
 
     // If all local storage values are not empty, show the Preview button
-    if (
-      activityName &&
-      subjectName &&
-      signatureData &&
-      messageData &&
-      recipientMail
-    ) {
+    if (smsActivityName && smsMessageData && toPhone) {
       setActivityData({
-        activityName,
-        subjectName,
-        signatureData,
-        messageData,
-        recipientMail,
+        smsActivityName,
+        smsMessageData,
+        toPhone,
       });
       setShowPreviewButton(true);
     } else {
@@ -101,15 +78,11 @@ const CreateActivity = () => {
   const renderContent = () => {
     switch (sidebarLabels[activeIndex]) {
       case "Activity Name":
-        return <ActivityName />;
-      case "Recipient":
-        return <Recipient />;
-      case "Subject":
-        return <Subject />;
+        return <SmsActivity />;
+      case "To":
+        return <TosmsRecipient />;
       case "Message":
-        return <MessageBody />;
-      case "Signature":
-        return <Signature />;
+        return <h1>message</h1>;
       default:
         return <div>Welcome to the Email Campaign</div>;
     }
@@ -117,36 +90,6 @@ const CreateActivity = () => {
 
   const handlePreview = () => {
     setShowModal(true);
-  };
-
-  const sendEmailAPI = async () => {
-    const userid = localStorage.getItem("auth_token");
-    const emailData = {
-      activityName: activityData.activityName,
-      subjectName: activityData.subjectName,
-      recipientMail: activityData.recipientMail,
-      messageData: JSON.parse(activityData.messageData),
-      signatureData: JSON.parse(activityData.signatureData),
-      userId: userid,
-    };
-    try {
-      const response = await clientAPI.post(SEND_EMAIL_ROUTE, emailData, {
-        withCredentials: true,
-      });
-      if (response.status === 200) {
-        console.log(response.data.mailSend)
-        setLoading(false);
-        setSuccessMail(true);
-      }
-    } catch (error) {
-      console.log(error);
-      setLoading(false);
-    }
-  };
-
-  const handleSendEmail = () => {
-    setLoading(true);
-    sendEmailAPI();
   };
 
   return (
@@ -161,7 +104,7 @@ const CreateActivity = () => {
           <motion.div
             className="bg-green-600 h-1 rounded-full"
             style={{ width: calculateWidth() }}
-            initial={{ width: "20%" }}
+            initial={{ width: "30%" }}
             animate={{ width: calculateWidth() }}
             transition={{ type: "spring", stiffness: 100 }}
           />
@@ -174,7 +117,7 @@ const CreateActivity = () => {
                 : "bg-blue-400"
             }`}
             disabled={!showPreviewButton} // Disable button based on the condition
-            onClick={handleSendEmail}
+            // onClick={handleSendEmail}
           >
             <BsSend className="mt-1" />
             <span className="ml-2">Send</span>
@@ -218,19 +161,19 @@ const CreateActivity = () => {
         {/* Onclick of close the modal  */}
         {successMail && (
           <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
-          <div className="bg-white rounded-lg p-6 shadow-lg max-w-sm w-full">
-            <h2 className="text-lg font-bold">Success!</h2>
-            <p className="mt-4">Your email has been sent successfully.</p>
-            <div className="mt-6 flex justify-end">
-              <button
-                className="bg-blue-500 text-white px-4 py-2 rounded"
-                onClick={() => setSuccessMail(false)}
-              >
-                OK
-              </button>
+            <div className="bg-white rounded-lg p-6 shadow-lg max-w-sm w-full">
+              <h2 className="text-lg font-bold">Success!</h2>
+              <p className="mt-4">Your email has been sent successfully.</p>
+              <div className="mt-6 flex justify-end">
+                <button
+                  className="bg-blue-500 text-white px-4 py-2 rounded"
+                  onClick={() => setSuccessMail(false)}
+                >
+                  OK
+                </button>
+              </div>
             </div>
           </div>
-        </div>
         )}
 
         <div className="block md:hidden w-full mt-5">
@@ -256,4 +199,4 @@ const CreateActivity = () => {
   );
 };
 
-export default CreateActivity;
+export default MessageCampaign;

@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 
 const CustomModal = ({ message, onConfirm, onCancel }) => {
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+    <div className="fixed z-50 inset-0 bg-black bg-opacity-50 flex items-center justify-center">
       <div className="bg-white rounded-lg shadow-lg w-full max-w-md mx-auto">
         <div className="px-6 py-4 border-b border-gray-200 flex justify-between items-center">
           <h5 className="text-xl font-medium">Confirmation</h5>

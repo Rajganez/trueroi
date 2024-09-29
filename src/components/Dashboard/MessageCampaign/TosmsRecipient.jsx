@@ -1,18 +1,18 @@
 import { motion } from "framer-motion";
+import { useState } from "react";
 import { clientAPI } from "../../../api/axios-api.js";
 import { SHOWLIST_ROUTE } from "../../../api/constants.js";
-import { useState } from "react";
 
-const Recipient = () => {
+const TosmsRecipient = () => {
   const [showList, setShowList] = useState([]);
-  const [isModalVisible, setIsModalVisible] = useState(false); // State to control modal visibility
-  const [selectedEmails, setSelectedEmails] = useState([]); // State to store selected emails
-  // eslint-disable-next-line no-unused-vars
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [selectedEmails, setSelectedEmails] = useState([]);
+
+  const userid = localStorage.getItem("auth_token");
+
   const [selectedList, setSelectedList] = useState(
     JSON.parse(localStorage.getItem("recipientMail"))
   );
-
-  const userid = localStorage.getItem("auth_token");
 
   const showListAPI = async () => {
     const temp = { userId: userid };
@@ -79,7 +79,6 @@ const Recipient = () => {
           </div>
         </div>
 
-        {/* Modal for Recipient List */}
         {isModalVisible && (
           <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
             <motion.div
@@ -96,8 +95,8 @@ const Recipient = () => {
                   <tr className="w-full">
                     <th className="text-left p-2 border">Select</th>
                     <th className="text-left p-2 border">Name</th>
-                    <th className="text-left p-2 border">Email</th>
                     <th className="text-left p-2 border">Phone</th>
+                    <th className="text-left p-2 border">Email</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -108,13 +107,13 @@ const Recipient = () => {
                           type="checkbox"
                           onChange={() => handleCheckboxChange(recipient)}
                           checked={selectedEmails.some(
-                            (item) => item[recipient.Name] === recipient.Email
+                            (item) => item[recipient.Name] === recipient.Phone
                           )}
                         />
                       </td>
                       <td className="p-2 border">{recipient.Name}</td>
-                      <td className="p-2 border">{recipient.Email}</td>
                       <td className="p-2 border">{recipient.Phone}</td>
+                      <td className="p-2 border">{recipient.Email}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -180,4 +179,4 @@ const Recipient = () => {
   );
 };
 
-export default Recipient;
+export default TosmsRecipient;
