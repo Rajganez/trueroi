@@ -137,18 +137,18 @@ const Recipient = () => {
           </div>
         )}
       </div>
-      {selectedList.length > 0 && (
-        <div className="overflow-x-auto overflow-y-auto w-full max-h-[400px]">
-          <table className="min-w-full bg-white border p-2">
+      {selectedList && selectedList.length > 0 && (
+        <div className="mt-5">
+          <table className="w-[30rem] overflow-y-scroll bg-white border p-2">
             <thead className="bg-gray-400">
               <tr className="border">
-                <th className="p-2 px-10 sticky top-0 left-0 z-20 bg-gray-400">
+                <th className="p-2 px-10 bg-gray-400">
                   S.No
                 </th>
-                <th className="p-2 px-10 sticky top-0 left-0 z-20 bg-gray-400">
+                <th className="p-2 px-10 bg-gray-400">
                   Name
                 </th>
-                <th className="p-2 px-10 sticky top-0 z-10 bg-gray-400">
+                <th className="p-2 px-10 bg-gray-400">
                   Email
                 </th>
               </tr>
@@ -164,11 +164,9 @@ const Recipient = () => {
                       {ind + 1}
                     </td>
                     <td className="p-1 px-10 sticky left-0 z-10 bg-white">
-                      {key} {/* Display the key */}
+                      {key}
                     </td>
-                    <td className="p-1 px-10">
-                      {value} {/* Display the value */}
-                    </td>
+                    <td className="p-1 px-10">{value}</td>
                   </tr>
                 </tbody>
               );

@@ -4,6 +4,7 @@ import { EMAIL_CAMPAIGN_DETAILS_ROUTE } from "../../../api/constants.js";
 
 const ActivityList = () => {
   const [mailSendList, setMailSendList] = useState([]);
+  const [apiError, setApiError] = useState("");
 
   const emailCampaignDetails = async () => {
     const user = localStorage.getItem("auth_token");
@@ -22,7 +23,7 @@ const ActivityList = () => {
         console.warn("No email campaign details found.");
       }
     } catch (error) {
-      console.error("Error fetching email campaign details:", error);
+      setApiError(error.response.data.msg);
     }
   };
 
@@ -32,7 +33,7 @@ const ActivityList = () => {
 
   return (
     <>
-      <div className="overflow-x-auto overflow-y-auto w-full max-h-[400px]">
+      <div className="mt-5 overflow-x-auto overflow-y-auto w-full max-h-[400px]">
         <table className="min-w-full bg-white border p-2">
           <thead className="bg-gray-400">
             <tr className="border">
@@ -43,12 +44,12 @@ const ActivityList = () => {
                 Client Name
               </th>
               <th className="p-2 px-10 sticky top-0 z-10 bg-gray-400">Email</th>
-              <th className="p-2 px-10 sticky top-0 z-10 bg-gray-400">Phone</th>
               <th className="p-2 px-10 sticky top-0 z-10 bg-gray-400">
                 UnSubscribed
               </th>
             </tr>
           </thead>
+          {apiError && <div className="text-red-500">{apiError}</div>}
           {mailSendList.map((list, ind) => {
             const sendToArray = JSON.parse(list.SendTo);
             return (

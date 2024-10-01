@@ -16,6 +16,7 @@ const MasterList = () => {
   const [showEditSuccess, setShowEditSuccess] = useState("");
   const [ShowDeleteModal, setShowDeleteModal] = useState(false);
   const [deleteInd, setDeleteInd] = useState({});
+  const [apiError, setApiError] = useState("");
 
   const [formData, setFormData] = useState({ Name: "", Email: "", Phone: "" });
 
@@ -27,10 +28,13 @@ const MasterList = () => {
       const response = await clientAPI.post(SHOWLIST_ROUTE, temp, {
         withCredentials: true,
       });
-      setShowList(response.data.client);
+      if (response.status === 200) {
+        setShowList(response.data.client);
+        setApiError("");
+      }
     } catch (error) {
       if (error) {
-        alert("Something went wrong. Please try again");
+        setApiError(error.response.data.msg);
       }
     }
   };
@@ -66,7 +70,7 @@ const MasterList = () => {
       }
     } catch (error) {
       if (error.status === 404) {
-        alert(error.response.msg);
+        setApiError(error.response.msg);
       } else if (error.status === 403) {
         setError(`${error.response.data.msg}`);
         setTimeout(() => {
@@ -172,6 +176,7 @@ const MasterList = () => {
               </th>
             </tr>
           </thead>
+          {apiError && <div className="text-red-600">{apiError}</div>}
           {showList.map((list, ind) => (
             <tbody key={list.Phone}>
               <tr className="border">

@@ -19,7 +19,10 @@ import { clientAPI } from "../api/axios-api";
 import { useBlocker, useNavigate } from "react-router-dom";
 import CustomModal from "../components/User/CustomModal";
 import Contacts from "../components/Dashboard/Contacts";
+import Testimonials from "../components/Dashboard/Testimonials"
 import MessageCampaign from "../components/Dashboard/MessageCampaign/MessageCampaign";
+import Todo from "../components/Dashboard/Todo";
+import LandingPage from "../components/Dashboard/LandingPage";
 
 // Reusable Sidebar Item Component
 const SidebarItem = ({ icon: Icon, label, onClick }) => (
@@ -65,11 +68,11 @@ const Dashboard = () => {
       case "Message Campaign":
         return <MessageCampaign />;
       case "Testimonial Campaign":
-        return <div>Collect testimonials here</div>;
+        return <Testimonials />;
       case "Todo":
-        return <div>Your Todo list</div>;
+        return <Todo />;
       case "Landing Page":
-        return <div>Landing Page builder</div>;
+        return <LandingPage />;
       default:
         return <div>Welcome to the Dashboard</div>;
     }

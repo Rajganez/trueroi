@@ -1,6 +1,7 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { lazy, Suspense } from "react";
 import ProtectedRoute from "./pages/ProtectedRoute";
+import TestimonialForClient from "./pages/TestimonialForClient";
 
 const Home = lazy(() => import("./pages/Home"));
 const Login = lazy(() => import("./pages/Login"));
@@ -13,6 +14,7 @@ const App = () => {
     { path: "/home", element: <Home /> },
     { path: "/login", element: <Login /> },
     { path: "/register", element: <Register /> },
+    { path: "/feedback-matters/:idStr", element: <TestimonialForClient /> },
     {
       path: "/dashboard",
       element: (

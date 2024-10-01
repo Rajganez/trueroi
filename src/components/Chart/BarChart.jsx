@@ -20,6 +20,11 @@ ChartJS.register(
 );
 
 const BarChart = () => {
+
+  
+
+
+
   const options = {
     responsive: true,
     plugins: {

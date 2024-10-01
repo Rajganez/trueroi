@@ -10,8 +10,9 @@ const TosmsRecipient = () => {
 
   const userid = localStorage.getItem("auth_token");
 
+  // eslint-disable-next-line no-unused-vars
   const [selectedList, setSelectedList] = useState(
-    JSON.parse(localStorage.getItem("recipientMail"))
+    JSON.parse(localStorage.getItem("toPhone"))
   );
 
   const showListAPI = async () => {
@@ -22,6 +23,7 @@ const TosmsRecipient = () => {
       });
       if (response.status === 200) {
         setShowList(response.data.client);
+        console.log(response.data.client)
       }
     } catch (error) {
       console.log(error);
@@ -35,29 +37,29 @@ const TosmsRecipient = () => {
 
   // Updated function to handle checkbox changes
   const handleCheckboxChange = (recipient) => {
-    const emailObj = { [recipient.Name]: recipient.Email };
+    const phoneObj = { [recipient.Name]: recipient.Phone };
 
     // Check if the email object already exists in the selectedEmails array
-    const emailExists = selectedEmails.some(
-      (item) => item[recipient.Name] === recipient.Email
+    const phoneExists = selectedEmails.some(
+      (item) => item[recipient.Name] === recipient.Phone
     );
 
-    if (emailExists) {
+    if (phoneExists) {
       // Remove the email object if it already exists (uncheck scenario)
       setSelectedEmails(
         selectedEmails.filter(
-          (item) => item[recipient.Name] !== recipient.Email
+          (item) => item[recipient.Name] !== recipient.Phone
         )
       );
     } else {
       // Add the email object to the selectedEmails array (check scenario)
-      setSelectedEmails([...selectedEmails, emailObj]);
+      setSelectedEmails([...selectedEmails, phoneObj]);
     }
   };
 
   const handleSave = () => {
     // Convert the selectedEmails array to a JSON string and store in localStorage
-    localStorage.setItem("recipientMail", JSON.stringify(selectedEmails));
+    localStorage.setItem("toPhone", JSON.stringify(selectedEmails));
     console.log("Selected Emails:", selectedEmails);
     setIsModalVisible(false); // Close modal after saving
   };
@@ -136,19 +138,19 @@ const TosmsRecipient = () => {
           </div>
         )}
       </div>
-      {selectedList.length > 0 && (
-        <div className="overflow-x-auto overflow-y-auto w-full max-h-[400px]">
-          <table className="min-w-full bg-white border p-2">
+      {selectedList && selectedList.length > 0 && (
+        <div className="mt-5">
+          <table className="w-[25rem] overflow-y-scroll bg-white border p-2">
             <thead className="bg-gray-400">
               <tr className="border">
-                <th className="p-2 px-10 sticky top-0 left-0 z-20 bg-gray-400">
+                <th className="p-2 px-10 bg-gray-400">
                   S.No
                 </th>
-                <th className="p-2 px-10 sticky top-0 left-0 z-20 bg-gray-400">
+                <th className="p-2 px-10 bg-gray-400">
                   Name
                 </th>
-                <th className="p-2 px-10 sticky top-0 z-10 bg-gray-400">
-                  Email
+                <th className="p-2 px-10 bg-gray-400">
+                  Phone
                 </th>
               </tr>
             </thead>
@@ -159,22 +161,22 @@ const TosmsRecipient = () => {
               return (
                 <tbody key={value}>
                   <tr className="border">
-                    <td className="p-1 px-10 sticky left-0 z-10 bg-white">
+                    <td className="p-1 bg-white">
                       {ind + 1}
                     </td>
-                    <td className="p-1 px-10 sticky left-0 z-10 bg-white">
+                    <td className="p-1 bg-white">
                       {key} {/* Display the key */}
                     </td>
                     <td className="p-1 px-10">
                       {value} {/* Display the value */}
-                    </td>
-                  </tr>
-                </tbody>
-              );
-            })}
-          </table>
-        </div>
-      )}
+                     </td>
+                    </tr>  
+                 </tbody>  
+                ); 
+              })} 
+            </table> 
+          </div> 
+        )}
     </>
   );
 };

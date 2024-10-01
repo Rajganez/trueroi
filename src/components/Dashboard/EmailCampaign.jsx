@@ -22,7 +22,7 @@ const EmailCampaign = () => {
       <div className="mx-5 mt-5 lg:text-2xl text-xl">
         Create Your Email Activity
       </div>
-      {!createStrategy ? <CreateActivity /> : <ActivityList />}
+      {!createStrategy ? <ActivityList /> : <CreateActivity />}
     </>
   );
 };

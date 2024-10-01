@@ -40,4 +40,12 @@ Required_Data - UserID, EmailSent Date, EmailSentListId, EmailContent
 Backend for Testimonial Campaign :
 Required_Data - UserID, EmailSent Date, EmailSentListId, EmailContent
 
+For testimonial : 
+Provide two buttons one for listing testimonials and another for generating testimonial link
+onclick generate link a link is generated with params /xyz
+In BE - userID, generated link, 
+In Testimonial list - EmailId, UserName, Stars, Testimonial,
 
+Create steps
+
+step 1 - 

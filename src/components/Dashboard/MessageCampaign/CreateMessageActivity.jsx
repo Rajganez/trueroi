@@ -5,9 +5,12 @@ import { AiFillCaretRight } from "react-icons/ai";
 import FullScreenLoader from "../EmailCampaign/FullScreenLoader";
 import { TiEyeOutline } from "react-icons/ti";
 import { BsSend } from "react-icons/bs";
-import PreviewModal from "../EmailCampaign/PreviewModal";
 import SmsActivity from "./SmsActivity";
 import TosmsRecipient from "./TosmsRecipient";
+import MessageBody from "./MessageBody";
+import PreviewMessage from "./PreviewMessage";
+// import { clientAPI } from "../../../api/axios-api.js";
+// import { SEND_SMS_ROUTE } from "../../../api/constants.js";
 
 const sidebarLabels = ["Activity Name", "To", "Message"];
 
@@ -82,7 +85,7 @@ const MessageCampaign = () => {
       case "To":
         return <TosmsRecipient />;
       case "Message":
-        return <h1>message</h1>;
+        return <MessageBody />;
       default:
         return <div>Welcome to the Email Campaign</div>;
     }
@@ -92,8 +95,37 @@ const MessageCampaign = () => {
     setShowModal(true);
   };
 
+  // const handleSendSMS = async () => {
+  //   const userid = localStorage.getItem("auth_token");
+  //   const smsData = {
+  //     smsActivityName: activityData.smsActivityName,
+  //     smsMessageData: activityData.smsMessageData,
+  //     toPhone: activityData.toPhone,
+  //     userId: userid,
+  //   };
+  //   try {
+  //     const response = await clientAPI.post(SEND_SMS_ROUTE, smsData, {
+  //       withCredentials: true,
+  //     });
+  //     console.log(response.data);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+  const handleSendSMS = () => {
+    alert("Sorry Service is currently unavailable");
+  };
   return (
     <>
+      <div
+        className="bg-red-100 mt-5 border border-red-400 text-red-700 px-4 py-3 rounded relative"
+        role="alert"
+      >
+        <strong className="font-bold">Thanks for Visiting &nbsp;</strong>
+        <span className="block sm:inline">
+          This Campaign is unavailable
+        </span>
+      </div>
       {loading && (
         <FullScreenLoader isLoading={loading} setIsLoading={setLoading} />
       )}{" "}
@@ -117,7 +149,7 @@ const MessageCampaign = () => {
                 : "bg-blue-400"
             }`}
             disabled={!showPreviewButton} // Disable button based on the condition
-            // onClick={handleSendEmail}
+            onClick={handleSendSMS}
           >
             <BsSend className="mt-1" />
             <span className="ml-2">Send</span>
@@ -190,7 +222,7 @@ const MessageCampaign = () => {
         </div>
       </div>
       {/* Preview Modal */}
-      <PreviewModal
+      <PreviewMessage
         showModal={showModal}
         onClose={() => setShowModal(false)}
         activityData={activityData}
