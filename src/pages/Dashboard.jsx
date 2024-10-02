@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { lazy, useState } from "react";
 import { motion } from "framer-motion";
 import PropTypes from "prop-types";
 import { IoHomeOutline } from "react-icons/io5";
@@ -10,19 +10,25 @@ import { LuListTodo } from "react-icons/lu";
 import { CgBrowser } from "react-icons/cg";
 import { CgProfile } from "react-icons/cg";
 import { RxHamburgerMenu } from "react-icons/rx";
-// import { LiaCrownSolid } from "react-icons/lia";
-import Calendar from "../components/Dashboard/Calendar";
-import UserDashboard from "../components/Dashboard/UserDashboard";
-import EmailCampaign from "../components/Dashboard/EmailCampaign";
 import { LOGOUT_ROUTE } from "../api/constants";
 import { clientAPI } from "../api/axios-api";
 import { useBlocker, useNavigate } from "react-router-dom";
-import CustomModal from "../components/User/CustomModal";
-import Contacts from "../components/Dashboard/Contacts";
-import Testimonials from "../components/Dashboard/Testimonials"
-import MessageCampaign from "../components/Dashboard/MessageCampaign/MessageCampaign";
-import Todo from "../components/Dashboard/Todo";
-import LandingPage from "../components/Dashboard/LandingPage";
+// import { LiaCrownSolid } from "react-icons/lia";
+const LandingPage = lazy(() => import("../components/Dashboard/LandingPage"));
+const Todo = lazy(() => import("../components/Dashboard/Todo"));
+const MessageCampaign = lazy(() =>
+  import("../components/Dashboard/MessageCampaign/MessageCampaign")
+);
+const Testimonials = lazy(() => import("../components/Dashboard/Testimonials"));
+const Contacts = lazy(() => import("../components/Dashboard/Contacts"));
+const CustomModal = lazy(() => import("../components/User/CustomModal"));
+const EmailCampaign = lazy(() =>
+  import("../components/Dashboard/EmailCampaign")
+);
+const UserDashboard = lazy(() =>
+  import("../components/Dashboard/UserDashboard")
+);
+const Calendar = lazy(() => import("../components/Dashboard/Calendar"));
 
 // Reusable Sidebar Item Component
 const SidebarItem = ({ icon: Icon, label, onClick }) => (
@@ -40,7 +46,7 @@ const SidebarItem = ({ icon: Icon, label, onClick }) => (
 SidebarItem.propTypes = {
   icon: PropTypes.elementType.isRequired,
   label: PropTypes.string.isRequired,
-  onClick: PropTypes.func.isRequired, // onClick handler is now required
+  onClick: PropTypes.func.isRequired, 
 };
 
 const Dashboard = () => {
@@ -93,7 +99,7 @@ const Dashboard = () => {
   const handleStay = () => {
     blocker.reset();
   };
-  
+
   const logoutAPI = async () => {
     try {
       const response = await clientAPI.post(LOGOUT_ROUTE);

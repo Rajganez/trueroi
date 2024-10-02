@@ -34,8 +34,7 @@ const Register = () => {
         setFormData(intialData);
       }
     } catch (error) {
-      console.log(error);
-      alert("An error occurred while registering");
+      alert(error.response.data.msg)
     }
   };
 

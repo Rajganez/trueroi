@@ -1,51 +1,87 @@
-FrontEnd :
-React + Vite + TailwindCSS + framermotion
+# SaaS CRM Web Application
 
-Backend :
-Node JS + Express JS + MongoDB
+A SaaS CRM (Customer Relationship Management) web application where users can manage contacts, send emails, share testimonial links, and view a calendar that shows activities performed on specific dates. Future updates will include message campaigns, To-Do lists, and a landing page feature. Users can also receive testimonials from clients.
 
-Required Dependencies :
-For frontend - react-router-dom , framermotion , tailwindcss , materialui
+## Features
 
-For Authorization and Authentication :
-After registration and Login using cookies to maintain the session of the user, use local storage for authentication
-case 1 : while user registered redirect to login Page
-case 2 : while user logged in redirect to dashboard page
-case 3 : while user in dashboard page protect user from navigating to login and register page, in the footer links like privacy, support, refer and earn allowed for navigation
-case 4 : footer links are allowed for every page navigation
-case 5 : once the user is logged out protect user from navigating to dashboard and redirect user to the home page
-case 6 : when user is in dashboard page and clicks the back button alert the user with the pop up using the useBlocker hook
+- **Send Emails**: Users can send emails to their clients directly from the dashboard.
+- **Testimonial Link**: Allows users to share a testimonial link with clients to receive feedback.
+- **Calendar Integration**: Shows activity logs for specific dates (e.g., emails sent, tasks completed).
+- **Activity Dashboard**: A visual representation of contact lists, emails sent, and unsubscribed clients.
+- **Future Features**:
+  - Message Campaigns
+  - To-Do List
+  - Landing Page Generation
 
-Backend User : for Login and Registration pages
-Registration - Id, Name, Email and Password, Date of Account Creation
+## Built With
 
-Backend List (for Each User) : In Contacts
-Create List - UserID , [{"Id" : "", "Email" : "", "Phone_Number": "", "Testimonial_Link": ""}, {..}, ...]
+- **Frontend**:
+  - [React](https://reactjs.org/) - JavaScript library for building user interfaces.
+  - [Vite](https://vitejs.dev/) - Next-generation front-end tool to enhance performance and DX.
+  - [Tailwind CSS](https://tailwindcss.com/) - Utility-first CSS framework for rapid UI development.
+  - [Framer Motion](https://www.framer.com/motion/) - Motion library for React to create smooth animations.
+  - [React Icons](https://react-icons.github.io/react-icons/) - Icon library for React.
+  - [Chart.js](https://www.chartjs.org/) - A simple yet flexible JavaScript charting library.
+  - [Axios](https://axios-http.com/) - Promise-based HTTP client for the browser.
 
-Backend for UserDashboard : Chart Creation
-line Chart - total listData for year and month view
-Pie Chart - total linkClicked for each Campaign
-Leads - Total listof customer who clicked the links are the leads and send a curated message for that customer with the knowing the links clicked for what messages
+## Getting Started
 
-Backend for Calendar :
-Required_Data - UserID, (Email,Message,Testimonial campaign dates), (List Data)
-Onclick a Date - Retrieve match date and Campaign Dates and show
+### Prerequisites
 
-Backend for Email Campaign :
-Required_Data - UserID, EmailSent Date, EmailSentListId, EmailContent
+To run the project locally, ensure you have the following installed:
 
-Backend for Message Campaign :
-Required_Data - UserID, EmailSent Date, EmailSentListId, EmailContent
+- Node.js (>= 16.x)
+- npm (or yarn)
 
-Backend for Testimonial Campaign :
-Required_Data - UserID, EmailSent Date, EmailSentListId, EmailContent
+### Installation
 
-For testimonial : 
-Provide two buttons one for listing testimonials and another for generating testimonial link
-onclick generate link a link is generated with params /xyz
-In BE - userID, generated link, 
-In Testimonial list - EmailId, UserName, Stars, Testimonial,
+1. Clone the repository:
 
-Create steps
+   ```bash
+   git clone https://github.com/your-username/saas-crm-webapp.git
+   ```
 
-step 1 - 
+2. Navigate to the project directory:
+
+   ```bash
+   cd saas-crm-webapp
+   ```
+
+3. Install dependencies:
+
+   ```bash
+   npm install
+   ```
+
+4. Run the application:
+
+   ```bash
+   npm run dev
+   ```
+
+5. Open your browser and visit `http://localhost:5173` to see the application in action.
+
+### File Structure
+
+```bash
+saas-crm-webapp/
+├── public/
+├── src/
+│   ├── api/
+│   │   └── axios-api.js
+│   ├── components/
+│   │   ├── Chart/              # BarChart Component
+│   │   ├── Dashboard/          # Components for Dashboard
+│   │   ├── User/               # User Auth Components
+│   ├── pages/
+│   │   ├── Dashboard/
+│   │   ├── Home/
+│   │   ├── Login/
+│   │   ├── Register/
+│   │   ├── TestimonialForClient/
+│   │   ├── Unsubscribe/
+│   └── App.jsx
+├── README.md
+├── package.json
+└── vite.config.js
+```

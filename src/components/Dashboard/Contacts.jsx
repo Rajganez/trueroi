@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
-import { useState } from "react";
-import CreateList from "./Contact/CreateList";
-import MasterList from "./Contact/MasterList";
+import { lazy, useState } from "react";
+const CreateList = lazy(() => import("./Contact/CreateList"));
+const MasterList = lazy(() => import("./Contact/MasterList"));
 
 const Contacts = () => {
   const [showListCanvas, setShowListCanvas] = useState(false);
@@ -25,7 +25,7 @@ const Contacts = () => {
             className="bg-blue-900 lg:text-xl hover:bg-blue-950 rounded-full 
           text-white p-3"
             whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.8 }}
+            whileTap={{ scale: 0.9 }}
             onClick={handleListCreation}
           >
             {showListCanvas ? "Back to List" : "Create List"}

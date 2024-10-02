@@ -160,18 +160,15 @@ const MasterList = () => {
   return (
     <>
       <div className="overflow-x-auto overflow-y-auto w-full max-h-[400px]">
-        <table className="min-w-full bg-white border p-2">
+        <table className="min-w-full border-collapse border-slate-400 bg-white border p-2">
           <thead className="bg-gray-400">
             <tr className="border">
-              <th className="p-2 px-10 sticky top-0 left-0 z-20 bg-gray-400">
+              <th className="p-2 border border-slate-500 px-10 sticky top-0 left-0 z-20 bg-gray-400">
                 Name
               </th>
-              <th className="p-2 px-10 sticky top-0 z-10 bg-gray-400">Email</th>
-              <th className="p-2 px-10 sticky top-0 z-10 bg-gray-400">Phone</th>
-              <th className="p-2 px-10 sticky top-0 z-10 bg-gray-400">
-                UnSubscribed
-              </th>
-              <th className="p-2 px-10 sticky top-0 z-10 bg-gray-400">
+              <th className="p-2 border border-slate-500 px-10 sticky top-0 z-10 bg-gray-400">Email</th>
+              <th className="p-2 border border-slate-500 px-10 sticky top-0 z-10 bg-gray-400">Phone</th>
+              <th className="p-2 border border-slate-500 px-10 sticky top-0 z-10 bg-gray-400">
                 Action
               </th>
             </tr>
@@ -179,17 +176,16 @@ const MasterList = () => {
           {apiError && <div className="text-red-600">{apiError}</div>}
           {showList.map((list, ind) => (
             <tbody key={list.Phone}>
-              <tr className="border">
-                <td className="p-1 px-10 sticky left-0 z-10 bg-white">
+              <tr className="border border-slate-500">
+                <td className="p-1 border border-slate-500 px-10 sticky left-0 z-10 bg-white">
                   {list.Name}
                 </td>
-                <td className="p-1 px-10">{list.Email}</td>
-                <td className="p-1 px-10">{list.Phone}</td>
-                <td className="p-1 px-10"></td>
-                <tr className="flex">
-                  <td className="p-1">
+                <td className="p-1 border border-slate-500 px-10">{list.Email}</td>
+                <td className="p-1 border border-slate-500 px-10">{list.Phone}</td>
+                <tr className="flex border">
+                  <td className="p-1 ">
                     <button
-                      className="flex"
+                      className="flex pr-2"
                       onClick={() =>
                         handleEdit(list.Name, list.Email, list.Phone, ind)
                       }
@@ -198,7 +194,7 @@ const MasterList = () => {
                       <span className="">Edit</span>
                     </button>
                   </td>
-                  <td className="p-1">
+                  <td className="p-1 ">
                     <button className="flex" onClick={() => handleDelete(ind)}>
                       <PiEraserDuotone className="mt-1 mr-1" />
                       <span>Delete</span>

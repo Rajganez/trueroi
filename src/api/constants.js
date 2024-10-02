@@ -20,6 +20,8 @@ export const CONFIRM_DELETE_ROUTE = `${CONTACT_ROUTE}/delete`;
 export const EMAIL_ROUTE = "/email";
 export const SEND_EMAIL_ROUTE = `${EMAIL_ROUTE}/send-email`;
 export const EMAIL_CAMPAIGN_DETAILS_ROUTE = `${EMAIL_ROUTE}/get-email-campaign`;
+export const UNSUBSCRIBE_ROUTE = `${EMAIL_ROUTE}/unsubscribe-email`;
+
 
 //----------------------------------------------------------------//
 

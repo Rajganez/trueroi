@@ -38,15 +38,16 @@ const Calendar = () => {
         }
       );
       if (Array.isArray(response.data) && response.data.length > 0) {
-        // Extract dates and set date data state
         const dates = response.data.map((item) => {
-          const sentOnDate = item.SentOn.split(",")[0];
-          const [day, month, year] = sentOnDate.split("/");
-          return { ...item, date: new Date(year, month - 1, day) };
+          const sentOnDates = item.SentOn.map((dateString) => {
+            const [datePart] = dateString.split(", "); // Only take the date part
+            const [day, month, year] = datePart.split("/").map(Number); // Convert to numbers
+            return new Date(year, month - 1, day); // Create a Date object
+          });
+          return { activities: item.Activity, dates: sentOnDates }; // Store both activities and dates
         });
-        console.log(response.data);
         // Set the marked dates state with only unique dates
-        setMarkedDates(dates.map((item) => item.date));
+        setMarkedDates([...new Set(dates.flatMap((item) => item.dates))]); // Flatten and remove duplicates
         setDateData(dates); // Set complete date data for reference
       } else {
         console.warn("No email campaign details found.");
@@ -60,6 +61,7 @@ const Calendar = () => {
 
   useEffect(() => {
     emailCampaignDetails();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const dayInMonth = () => {
@@ -108,10 +110,20 @@ const Calendar = () => {
 
   const handleClick = (date) => {
     if (!date) return;
+
+    // Clear previous activities
+    setSelectedActivities([]);
+
     // Filter activities for the selected date from dateData
-    const activitiesForDate = dateData.filter((item) =>
-      isSameDay(item.date, date)
-    );
+    const activitiesForDate = dateData.reduce((acc, item) => {
+      item.dates.forEach((itemDate, index) => {
+        if (isSameDay(itemDate, date)) {
+          acc.push(item.activities[index]); // Push the activity corresponding to the date
+        }
+      });
+      return acc;
+    }, []);
+
     setSelectedActivities(activitiesForDate);
   };
 
@@ -198,7 +210,7 @@ const Calendar = () => {
               {day &&
                 markedDates.some((markedDay) => isSameDay(day, markedDay)) && (
                   <div
-                    className="absolute bottom-0 right-4 h-2 w-2 bg-green-500 rounded-full"
+                    className="absolute bottom-0 right-5 h-2 w-2 bg-green-500 rounded-full"
                     style={{ margin: "2px" }}
                   ></div>
                 )}
@@ -211,31 +223,13 @@ const Calendar = () => {
       <div className="lg:flex flex-col lg:w-96 w-full bg-gray-100 p-4 m-2 shadow-lg">
         <h2 className="text-lg font-semibold mb-2">Activities</h2>
         {selectedActivities.length > 0 ? (
-          selectedActivities.map((activity, index) => {
-            // Parse the SendTo JSON string into an array of objects
-            const sendToArray = JSON.parse(activity.SendTo);
-
-            return (
-              <div key={index} className="p-2 bg-white mb-2 rounded-lg shadow">
-                <p>
-                  <strong>Activity Name:</strong> {activity.Activity}
-                </p>
-                <p>
-                  <strong>Send To:&nbsp;</strong>
-                  {/* Extract and display the keys (names) from each object in sendToArray */}
-                  {sendToArray.map((recipient, idx) => (
-                    <span key={idx}>
-                      {Object.keys(recipient)[0]}
-                      {idx < sendToArray.length - 1 && ", "}
-                    </span>
-                  ))}
-                </p>
-                <p>
-                  <strong>Sent On:</strong> {activity.SentOn}
-                </p>
-              </div>
-            );
-          })
+          selectedActivities.map((activity, index) => (
+            <div key={index} className="p-2 bg-white mb-2 rounded-lg shadow">
+              <p>
+                <strong>Activity:</strong> {activity}
+              </p>
+            </div>
+          ))
         ) : (
           <p className="text-gray-500">Select a date to see activities.</p>
         )}

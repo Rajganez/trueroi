@@ -6,7 +6,7 @@ const Todo = () => {
         role="alert"
       >
         <strong className="font-bold">Thanks for Visiting &nbsp;</strong>
-        <span className="block sm:inline">Will be available shortly</span>
+        <span className="block sm:inline">Will shortly be available</span>
       </div>
     </div>
   );

@@ -18,7 +18,7 @@ const TestimonialList = () => {
         if (response.data.testimonials.testimonial) {
           setList(response.data.testimonials.testimonial);
           setApiError("");
-        }else if(!response.data.testimonials.testimonial){
+        } else if (!response.data.testimonials.testimonial) {
           setApiError("No Testimonials Found!");
         }
       }
@@ -37,26 +37,39 @@ const TestimonialList = () => {
   return (
     <>
       <div className="overflow-x-auto overflow-y-auto w-full max-h-[400px] mt-5">
-        <table className="min-w-full bg-white border p-2">
+        <table className="min-w-full bg-white border-collapse border border-slate-400 p-2">
           <thead className="bg-gray-400">
-            <tr className="border">
-              <th className="p-2  bg-gray-400">Client Name</th>
-              <th className="p-2 bg-gray-400">Email ID</th>
-              <th className="p-2 px-10  bg-gray-400">Stars</th>
-              <th className="p-2 px-10  bg-gray-400">Feedback</th>
+            <tr>
+              <th className="p-2 border border-slate-500 bg-gray-400">Client Name</th>
+              <th className="p-2 border border-slate-500 bg-gray-400">Email ID</th>
+              <th className="p-2 border border-slate-500 px-10 bg-gray-400">Stars</th>
+              <th className="p-2 border border-slate-500 px-10 bg-gray-400">Feedback</th>
             </tr>
           </thead>
           {apiError && <div className="text-red-500">{apiError}</div>}
-          {list.map((val) =>
-              <tbody key={val.clientEmail}>
-                <tr>
-                  <td>{val.clientName}</td>
-                  <td>{val.clientEmail}</td>
-                  <td>{val.ratings}</td>
-                  <td>{val.feedBack}</td>
-                </tr>
-              </tbody>  
-          )}
+          {list.map((val) => (
+            <tbody key={val.clientEmail}>
+              <tr className="border border-slate-500">
+                <td className="p-2 border border-slate-500">{val.clientName}</td>
+                <td className="p-2 border border-slate-500">{val.clientEmail}</td>
+                <td className="p-2 border border-slate-500">
+                  <div className="flex">
+                    {[1, 2, 3, 4, 5].map((starIndex) => (
+                      <span
+                        key={starIndex}
+                        className={`cursor-pointer text-3xl ${
+                          starIndex <= val.ratings ? "text-yellow-500" : "text-gray-400"
+                        }`}
+                      >
+                        ★
+                      </span>
+                    ))}
+                  </div>
+                </td>
+                <td className="p-2 border border-slate-500">{val.feedBack}</td>
+              </tr>
+            </tbody>
+          ))}
         </table>
       </div>
     </>
