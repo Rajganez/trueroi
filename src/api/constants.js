@@ -5,6 +5,8 @@ export const REGISTER_ROUTE = `${AUTH_ROUTE}/register`;
 export const LOGIN_ROUTE = `${AUTH_ROUTE}/login`;
 export const LOGOUT_ROUTE = `${AUTH_ROUTE}/logout`;
 export const USER_DETAILS_ROUTE = `${AUTH_ROUTE}/get-user`;
+export const FORGOT_PASSWORD_ROUTE = `${AUTH_ROUTE}/forgot-user`;
+export const PASSWORD_RESET_ROUTE = `${AUTH_ROUTE}/password-reset`;
 
 //----------------------------------------------------------------//
 
@@ -22,7 +24,6 @@ export const SEND_EMAIL_ROUTE = `${EMAIL_ROUTE}/send-email`;
 export const EMAIL_CAMPAIGN_DETAILS_ROUTE = `${EMAIL_ROUTE}/get-email-campaign`;
 export const UNSUBSCRIBE_ROUTE = `${EMAIL_ROUTE}/unsubscribe-email`;
 
-
 //----------------------------------------------------------------//
 
 export const SMS_ROUTE = "/message";
@@ -34,3 +35,8 @@ export const TESTIMONIAL_ROUTE = "/testimonial";
 export const TESTIMONIAL_LINK = `${TESTIMONIAL_ROUTE}/generate-link`;
 export const GET_TESTIMONIAL = `${TESTIMONIAL_ROUTE}/get-testimonial`;
 export const SEND_FEEDBACK_ROUTE = `${TESTIMONIAL_ROUTE}/client-feedback`;
+
+//----------------------------------------------------------------//
+
+export const DEMO_ROUTE = "/demo";
+export const DEMO_DETAILS_ROUTE = `${DEMO_ROUTE}/demo-details`;

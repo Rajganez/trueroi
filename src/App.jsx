@@ -8,6 +8,9 @@ const Register = lazy(() => import("./pages/Register"));
 const Dashboard = lazy(() => import("./pages/Dashboard"));
 const Unsubscribe = lazy(() => import("./pages/Unsubscribe"));
 const TestimonialForClient = lazy(() => import("./pages/TestimonialForClient"));
+const Privacy = lazy(() => import("./pages/Privacy"));
+const Support = lazy(() => import("./pages/Support"));
+const PasswordReset = lazy(() => import("./pages/PasswordReset"));
 
 const App = () => {
   const router = createBrowserRouter([
@@ -17,6 +20,9 @@ const App = () => {
     { path: "/register", element: <Register /> },
     { path: "/feedback-matters/:idStr", element: <TestimonialForClient /> },
     { path: "/unsubscribe", element: <Unsubscribe /> },
+    { path: "/privacy", element: <Privacy /> },
+    { path: "/support", element: <Support /> },
+    { path: "/reset-password/:id", element: <PasswordReset /> },
     {
       path: "/dashboard",
       element: (

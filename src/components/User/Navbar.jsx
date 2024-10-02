@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { lazy, useState } from "react";
 import { motion } from "framer-motion";
-import Describe from "./Describe";
-import Demo from "./Demo";
-import Footer from "./Footer";
 import { useNavigate } from "react-router-dom";
+const Demo = lazy(() => import("./Demo"));
+const Describe = lazy(() => import("./Describe"));
+const Footer = lazy(() => import("./Footer"));
 
 const Navbar = () => {
   const [iconFont, setIconFont] = useState(false);
@@ -17,7 +17,7 @@ const Navbar = () => {
   const handleLogin = (e) => {
     e.preventDefault();
     navigate("/login");
-  }
+  };
 
   return (
     <>

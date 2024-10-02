@@ -80,6 +80,8 @@ saas-crm-webapp/
 │   │   ├── Register/
 │   │   ├── TestimonialForClient/
 │   │   ├── Unsubscribe/
+│   │   ├── Support/
+│   │   ├── Privacy/
 │   └── App.jsx
 ├── README.md
 ├── package.json
