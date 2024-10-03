@@ -38,13 +38,13 @@ To run the project locally, ensure you have the following installed:
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/your-username/saas-crm-webapp.git
+   git clone https://github.com/Rajganez/trueroi.git
    ```
 
 2. Navigate to the project directory:
 
    ```bash
-   cd saas-crm-webapp
+   cd trueroi
    ```
 
 3. Install dependencies:
