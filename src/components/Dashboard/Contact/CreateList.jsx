@@ -61,7 +61,7 @@ const CreateList = () => {
       const file = fileRef.current.files[0];
       processFile(file);
     } catch (error) {
-      if(error){
+      if (error) {
         alert(error.message);
       }
       console.log(error);
@@ -309,7 +309,8 @@ const CreateList = () => {
           </div>
           {showSampleFormat && (
             <div className="absolute lg:right-10 lg:bottom-10 z-50 mt-5">
-              <button
+              <div
+                type="button"
                 className="p-1 text-lg text-red-800"
                 onClick={() => setSampleFormat(false)}
               >
@@ -320,7 +321,7 @@ const CreateList = () => {
                 >
                   [x] Close
                 </motion.button>
-              </button>
+              </div>
               <img src={ExcelPic} width={300} title="Sample Format" />
             </div>
           )}
