@@ -28,13 +28,13 @@ const Register = () => {
   const registerAPI = async () => {
     try {
       const response = await clientAPI.post(REGISTER_ROUTE, formData);
-      if(response.status === 200){
+      if (response.status === 200) {
         navigate("/login");
-        alert("Registered successfully. Login")
+        alert("Registered successfully. Login");
         setFormData(intialData);
       }
     } catch (error) {
-      alert(error.response.data.msg)
+      alert(error.response.data.msg);
     }
   };
 
@@ -140,8 +140,11 @@ const Register = () => {
           >
             <img src={RegisterFace} width={150} className="rounded-xl" />
           </div>
-          <div className="md:w-[30%] md:ml-10 md:mt-20 ml-2 mt-2 col-span-2">
-            <strong>TROI:</strong>Simplify Your Marketing, Amplify Your Impact.
+          <div
+            className="md:w-[30%] md:ml-10 md:mt-20 ml-2 mt-2 col-span-2"
+            style={{ fontFamily: "Poppins" }}
+          >
+            <strong>TROI:&nbsp;</strong>Simplify Your Marketing, Amplify Your Impact.
             Empower your business with targeted campaigns, authentic feedback,
             and high-quality lead generation all in one place.
             <br />

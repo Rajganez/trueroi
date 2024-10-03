@@ -57,8 +57,7 @@ const Login = () => {
       }
       // success handling
     } catch (error) {
-      console.log(error);
-      // error handling
+      alert(error.response.data.msg);
     }
   };
 
@@ -208,7 +207,9 @@ const Login = () => {
             </form>
           </div>
 
-          <div className="lg:text-lg text-xs mt-5 lg:ml-10 ml-2 md:w-[20%]">
+          <div className="lg:text-lg text-xs mt-5 lg:ml-10 ml-2 md:w-[20%]"
+          style={{fontFamily : "Poppins"}}
+          >
             <div>
               Smart Solutions for Customer Success: Update your customer email
               and phone number to the List and send.

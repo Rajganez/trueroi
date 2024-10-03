@@ -96,6 +96,13 @@ const CreateActivity = () => {
   // Run the check when the component mounts
   useEffect(() => {
     checkLocalStorage();
+
+    const intervalId = setInterval(() => {
+      checkLocalStorage(); // Check every 1 second
+    }, 1000);
+
+    // Cleanup the interval on component unmount
+    return () => clearInterval(intervalId);
   }, []);
 
   const renderContent = () => {
@@ -134,7 +141,6 @@ const CreateActivity = () => {
         withCredentials: true,
       });
       if (response.status === 200) {
-        console.log(response.data.mailSend)
         setLoading(false);
         setSuccessMail(true);
       }
@@ -218,19 +224,19 @@ const CreateActivity = () => {
         {/* Onclick of close the modal  */}
         {successMail && (
           <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
-          <div className="bg-white rounded-lg p-6 shadow-lg max-w-sm w-full">
-            <h2 className="text-lg font-bold">Success!</h2>
-            <p className="mt-4">Your email has been sent successfully.</p>
-            <div className="mt-6 flex justify-end">
-              <button
-                className="bg-blue-500 text-white px-4 py-2 rounded"
-                onClick={() => setSuccessMail(false)}
-              >
-                OK
-              </button>
+            <div className="bg-white rounded-lg p-6 shadow-lg max-w-sm w-full">
+              <h2 className="text-lg font-bold">Success!</h2>
+              <p className="mt-4">Your email has been sent successfully.</p>
+              <div className="mt-6 flex justify-end">
+                <button
+                  className="bg-blue-500 text-white px-4 py-2 rounded"
+                  onClick={() => setSuccessMail(false)}
+                >
+                  OK
+                </button>
+              </div>
             </div>
           </div>
-        </div>
         )}
 
         <div className="block md:hidden w-full mt-5">

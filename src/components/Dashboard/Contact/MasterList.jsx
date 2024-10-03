@@ -182,7 +182,7 @@ const MasterList = () => {
                 </td>
                 <td className="p-1 border border-slate-500 px-10">{list.Email}</td>
                 <td className="p-1 border border-slate-500 px-10">{list.Phone}</td>
-                <tr className="flex border">
+                <td className="flex border">
                   <td className="p-1 ">
                     <button
                       className="flex pr-2"
@@ -191,16 +191,16 @@ const MasterList = () => {
                       }
                     >
                       <GrEdit className="text-xs mt-2 mr-1" />
-                      <span className="">Edit</span>
+                      <td className="">Edit</td>
                     </button>
                   </td>
                   <td className="p-1 ">
                     <button className="flex" onClick={() => handleDelete(ind)}>
                       <PiEraserDuotone className="mt-1 mr-1" />
-                      <span>Delete</span>
+                      <td>Delete</td>
                     </button>
                   </td>
-                </tr>
+                </td>
               </tr>
             </tbody>
           ))}

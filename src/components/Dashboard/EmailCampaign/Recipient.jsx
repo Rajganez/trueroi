@@ -1,15 +1,15 @@
 import { motion } from "framer-motion";
 import { clientAPI } from "../../../api/axios-api.js";
 import { SHOWLIST_ROUTE } from "../../../api/constants.js";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const Recipient = () => {
   const [showList, setShowList] = useState([]);
   const [isModalVisible, setIsModalVisible] = useState(false); // State to control modal visibility
   const [selectedEmails, setSelectedEmails] = useState([]); // State to store selected emails
-  // eslint-disable-next-line no-unused-vars
+
   const [selectedList, setSelectedList] = useState(
-    JSON.parse(localStorage.getItem("recipientMail"))
+    JSON.parse(localStorage.getItem("recipientMail")) || []
   );
 
   const userid = localStorage.getItem("auth_token");
@@ -58,9 +58,26 @@ const Recipient = () => {
   const handleSave = () => {
     // Convert the selectedEmails array to a JSON string and store in localStorage
     localStorage.setItem("recipientMail", JSON.stringify(selectedEmails));
-    console.log("Selected Emails:", selectedEmails);
+    setSelectedList(selectedEmails); // Update selectedList state to trigger re-render
     setIsModalVisible(false); // Close modal after saving
   };
+
+  // Optional: If you need to listen for changes in localStorage (in case it's updated elsewhere)
+  useEffect(() => {
+    const updateSelectedList = () => {
+      const recipientMail = JSON.parse(localStorage.getItem("recipientMail"));
+      if (recipientMail) {
+        setSelectedList(recipientMail);
+      }
+    };
+
+    // Listen for changes to localStorage
+    window.addEventListener("storage", updateSelectedList);
+
+    return () => {
+      window.removeEventListener("storage", updateSelectedList);
+    };
+  }, []);
 
   return (
     <>
@@ -137,20 +154,16 @@ const Recipient = () => {
           </div>
         )}
       </div>
+
+      {/* Display selected list after saving */}
       {selectedList && selectedList.length > 0 && (
         <div className="mt-5">
           <table className="w-[30rem] overflow-y-scroll bg-white border p-2">
             <thead className="bg-gray-400">
               <tr className="border">
-                <th className="p-2 px-10 bg-gray-400">
-                  S.No
-                </th>
-                <th className="p-2 px-10 bg-gray-400">
-                  Name
-                </th>
-                <th className="p-2 px-10 bg-gray-400">
-                  Email
-                </th>
+                <th className="p-2 px-10 bg-gray-400">S.No</th>
+                <th className="p-2 px-10 bg-gray-400">Name</th>
+                <th className="p-2 px-10 bg-gray-400">Email</th>
               </tr>
             </thead>
             {selectedList.map((list, ind) => {
